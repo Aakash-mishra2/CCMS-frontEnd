@@ -35,7 +35,9 @@
 }
 
 @media (min-width: 768px) {
-  .main-navigation__menu-btn {}
+  .main-navigation__menu-btn {
+    display: none;
+  }
 
   .main-navigation__header-nav {
     display: block;

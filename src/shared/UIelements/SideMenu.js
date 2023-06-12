@@ -8,10 +8,10 @@ export default function SideMenu(props) {
     const sideDrawer = (
         <CSSTransition
             in={props.show}
-            mountonEnter
-            unmountOnExit
             timeout={200}
             classNames="slide-in-left"
+            mountonEnter
+            unmountOnExit
         >
             <aside className="side-drawer" onClick={props.closeMenu}>{props.children}</aside>
         </CSSTransition>
