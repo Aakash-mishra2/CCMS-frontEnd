@@ -1,32 +1,58 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
+import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Citizens from './citizens/pages/Citizens';
 import NewCases from './court/pages/NewCases';
 import RegisteredCases from './court/pages/RegisteredCases';
 import MainNavigation from './shared/Navigation/MainNavigation';
 import UpdateCases from './court/pages/UpdateCases';
 import Authenticate from './citizens/pages/Authenticate';
+import { AuthContext } from './shared/context/authContext';
+
 import './App.css';
 
+
+
 function App() {
-  let routes = (
-    <Routes>
-      <Route path="/" element={< Citizens />} />
-      <Route path="/cases/new" element={<NewCases />} />
-      <Route path="/:uid/cases" element={< RegisteredCases />} />
-      <Route path="/update/:caseID" element={<UpdateCases />} />
-      <Route path="/users/authenticate" element={<Authenticate />} />
-    </Routes>
-  );
+
+  const [log_In, setLog_In] = useState(false);
+  function logout() { setLog_In(false); }
+  function login() { setLog_In(true); }
+
+  let routes;
+  if (log_In) {
+    routes = (
+      <Routes>
+        <Route path="/" element={< Citizens />} />
+        <Route path="/cases/new" element={<NewCases />} />
+        <Route path="/:uid/cases" element={< RegisteredCases />} />
+        <Route path="/update/:caseID" element={<UpdateCases />} />
+        <Route path="/users/authenticate" element={<Navigate to="/" />} />
+      </Routes>
+    )
+  }
+  else {
+    routes = (
+      <Routes>
+        <Route path="/" element={< Citizens />} />
+        <Route path="/users/authenticate" element={<Authenticate />} />
+
+        <Route path="/users/authenticate" element={<Navigate to="/users/authenticate" />} />
+        <Route path="/cases/new" element={<Navigate to="/users/authenticate" />} />
+        <Route path="/:uid/cases" element={<Navigate to="/users/authenticate" />} />
+        <Route path="/update/:caseID" element={<Navigate to="/users/authenticate" />} />
+      </Routes>
+    )
+  }
 
   return (
-    <BrowserRouter>
-      <MainNavigation />
-      <main>
-        {routes}
-      </main>
-    </BrowserRouter>
+    <AuthContext.Provider value={{ isLoggedIn: log_In, login: login, logout: logout }} >
+      <BrowserRouter>
+        <MainNavigation />
+        <main>
+          {routes}
+        </main>
+      </BrowserRouter>
+    </AuthContext.Provider>
   );
 }
 

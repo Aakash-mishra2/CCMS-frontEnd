@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Button from "../../shared/formElements/Button";
 import Input from "../../shared/formElements/Input";
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from "../../shared/util/validators";
 import { useForm } from "../../shared/hooks/form-hook";
 import Card from "../../shared/UIelements/Card";
+import { AuthContext } from "../../shared/context/authContext";
 import './Authenticate.css';
 
 export default function Authenticate() {
+
+    const auth = useContext(AuthContext);
+
     const [isLogin, setIsLogin] = useState(true);
     const [formState, inputHandler, setFormData] = useForm({
         email: { value: '', isValid: false },
@@ -39,13 +43,14 @@ export default function Authenticate() {
 
     function userSubmitHandler(event) {
         console.log(formState.inputs);
+        auth.login();
         event.preventDefault();
     };
     return (
         <React.Fragment>
             <Card className="authentication">
                 <form onSubmit={userSubmitHandler}>
-                    {isLogin && <Input
+                    {!isLogin && <Input
                         type="text"
                         element="input"
                         id="name"
