@@ -10,13 +10,13 @@ import { AuthContext } from './shared/context/authContext';
 
 import './App.css';
 
-
-
-function App() {
+export const App = () => {
 
   const [log_In, setLog_In] = useState(false);
-  function logout() { setLog_In(false); }
-  function login() { setLog_In(true); }
+  const [loginID, setLoginID] = useState();
+
+  function logout() { setLog_In(false); setLoginID(null); }
+  function login(cID) { setLog_In(true); setLoginID(cID); }
 
   let routes;
   if (log_In) {
@@ -35,7 +35,6 @@ function App() {
       <Routes>
         <Route path="/" element={< Citizens />} />
         <Route path="/users/authenticate" element={<Authenticate />} />
-
         <Route path="/users/authenticate" element={<Navigate to="/users/authenticate" />} />
         <Route path="/cases/new" element={<Navigate to="/users/authenticate" />} />
         <Route path="/:uid/cases" element={<Navigate to="/users/authenticate" />} />
@@ -45,7 +44,7 @@ function App() {
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn: log_In, login: login, logout: logout }} >
+    <AuthContext.Provider value={{ isLoggedIn: log_In, loginID: loginID, login: login, logout: logout }} >
       <BrowserRouter>
         <MainNavigation />
         <main>
