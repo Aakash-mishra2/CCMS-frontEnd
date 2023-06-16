@@ -131,8 +131,8 @@ export default function Authenticate() {
                         type="password"
                         id="password"
                         label=" Your Password: "
-                        errorText="Enter a valid Password of 10 digits or more."
-                        validators={[VALIDATOR_MINLENGTH(10)]}
+                        errorText="Enter a valid Password of 6 digits or more."
+                        validators={[VALIDATOR_MINLENGTH(6)]}
                         onInput={inputHandler}
                     />
 

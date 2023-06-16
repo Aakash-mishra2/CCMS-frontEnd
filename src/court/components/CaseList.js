@@ -9,7 +9,7 @@ export default function CaseList(props) {
         return (
             <div className="case-list center" >
                 <Card>
-                    <p>No projects found ! Maybe create one. </p>
+                    <h4>No Cases found ! Login for this Citizen, and Register one on New Case Tab. </h4>
                 </Card>
             </div>
         );
@@ -22,11 +22,13 @@ export default function CaseList(props) {
                     id={items.id}
                     court={items.court}
                     description={items.description}
-                    image={items.imageUrl}
+                    image={items.image}
                     judge={items.judge}
                     status={items.status}
-                    nextDate={items.nextHearing}
-                    toDelete={items.removeItem}
+                    nextDate={items.next_hearing}
+                    toDelete={props.removeItem}
+                    creatorID={props.plaintiffID}
+
                 />
             ))}
         </ul>

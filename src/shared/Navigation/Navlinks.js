@@ -14,7 +14,7 @@ export default function Navlinks() {
                 <NavLink to="/">CITIZENS</NavLink>
             </li>
             <li>
-                {auth.isLoggedIn && <NavLink to="/c1/cases">MY CASES</NavLink>}
+                {auth.isLoggedIn && <NavLink to={`/${auth.loginID}/cases`}>MY CASES</NavLink>}
             </li>
             <li>
                 {auth.isLoggedIn && <NavLink to="/cases/new">NEW CASE</NavLink>}

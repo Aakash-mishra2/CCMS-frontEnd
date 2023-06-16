@@ -1,20 +1,39 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Card from "../../shared/UIelements/Card";
 import Button from "../../shared/formElements/Button";
 import Modal from "../../shared/UIelements/Modal";
+import { useHttpProcess } from "../../shared/hooks/http-hook";
+import ErrorModal from "../../shared/UIelements/ErrorModal";
+import { AuthContext } from "../../shared/context/authContext";
 
 export default function CaseItem(props) {
-
+    const auth = useContext(AuthContext);
+    const { isLoading, sendRequest, error, clearError } = useHttpProcess();
     const [isDescBox, setIsBox] = useState(false);
+    const [confirmModal, setConfirmModal] = useState();
     const openDescBox = () => { setIsBox(true); }
     const closeDescBox = () => { setIsBox(false); }
-    const removeCase = () => {
-        //props.toDelete(props.id); 
+    const openConfirmModal = () => { setConfirmModal(true); }
+    const closeConfirmModal = () => { setConfirmModal(false); }
+
+    const confirmDeleteCase = async () => {
+        setConfirmModal(false);
+        try {
+            await sendRequest(
+                `http://localhost:5000/ccms/admin/remove/${props.id}`,
+                'DELETE',
+            );
+            props.toDelete(props.id);
+        } catch (err) { }
     }
 
     return (
         <div>
             <React.Fragment>
+                <ErrorModal error={error} clearError={clearError} />
+                {isLoading && (
+                    <div><h1>Loading</h1></div>
+                )}
                 <Modal
                     show={isDescBox}
                     closeBox={closeDescBox}
@@ -27,6 +46,16 @@ export default function CaseItem(props) {
                     <p> Next Hearing  : {props.nextDate} </p>
                     <p> Judge : {props.judge} </p>
                 </Modal>
+                <Modal
+                    show={confirmModal}
+                    closeBox={closeConfirmModal}
+                    header={'WARNING'}
+                    footer={<Button onClick={confirmDeleteCase}> DELETE </Button>}
+                    contentClass="case-item__modal-content"
+                    footerClass="case-item__modal-actions"
+                >
+                    <p>This action is not reversible. Are you sure want to delete this case forever? </p>
+                </Modal>
                 <li className="case-item">
                     <Card className="case-item__content">
                         <div className="case-item__image">
@@ -34,13 +63,17 @@ export default function CaseItem(props) {
                         </div>
                         <div className="case-item__info">
                             <h2>{props.court} </h2>
-                            <h3>{props.nextDate}</h3>
+                            <h4>Next hearing {props.nextDate}</h4>
                         </div>
                         <div className="case-item__actions">
 
                             <Button onClick={openDescBox} >VIEW DESCRIPTION</Button>
-                            <Button to={`/update/${props.id}`}>EDIT</Button>
-                            <Button onClick={removeCase}>DELETE</Button>
+                            {(auth.loginId === props.creatorID) && (
+                                <Button to={`/update/${props.id}`}>EDIT</Button>
+                            )}
+                            {(auth.loginId === props.creatorID) && (
+                                <Button danger onClick={openConfirmModal}>DELETE</Button>
+                            )}
                         </div>
                     </Card>
                 </li>

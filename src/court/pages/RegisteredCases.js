@@ -20,6 +20,11 @@ export default function RegisteredCases() {
     getAllCases();
   }, [sendRequest, userID]);
 
+  const removeCase = (delID) => {
+    setLoadedCases(
+      prevCases => prevCases.filter(item => item.id !== delID));
+  }
+
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
@@ -28,7 +33,7 @@ export default function RegisteredCases() {
           <h2>Loading...</h2>
         </div>)
       }
-      {!isLoading && loadedCases && <CaseList cases={loadedCases} />}
+      {!isLoading && loadedCases && <CaseList plaintiffID={userID} removeItem={removeCase} cases={loadedCases} />}
     </React.Fragment>
   )
 };

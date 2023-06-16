@@ -41,7 +41,6 @@ export default function NewCases() {
     const caseSubmitHandler = async (event) => {
         event.preventDefault();
         try {
-            console.log(formState.inputs);
             await sendRequest(
                 'http://localhost:5000/ccms/admin/newcase',
                 'POST',
