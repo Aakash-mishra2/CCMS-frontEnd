@@ -7,48 +7,55 @@ import './CasesForm.css';
 import { useHttpProcess } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/authContext";
 import ErrorModal from "../../shared/UIelements/ErrorModal";
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useNavigate } from "react-router-dom";
 
 export default function NewCases() {
     const auth = useContext(AuthContext);
     const [formState, inputHandler] = useForm({
-        name: {
+        court: {
             value: '',
             isValid: false
         },
-        aadhar_no: {
+        description: {
             value: '',
             isValid: false
         },
-        case_desc: {
+        location_city: {
             value: '',
             isValid: false
-        }
+        },
+        location_pincode: {
+            value: '',
+            isValid: false
+        },
+        judge: {
+            value: '',
+            isValid: false
+        },
     }, false
     )
-    const { isLoading, error, sendRequest, clearError } = useHttpProcess();
+    const { isLoading, sendRequest, error, clearError } = useHttpProcess();
 
-    const history = useHistory();
+    const history = useNavigate();
 
     const caseSubmitHandler = async (event) => {
         event.preventDefault();
         try {
-            sendRequest(
+            console.log(formState.inputs);
+            await sendRequest(
                 'http://localhost:5000/ccms/admin/newcase',
                 'POST',
                 JSON.stringify({
                     court: formState.inputs.court.value,
                     description: formState.inputs.description.value,
-                    location: {
-                        location_city: formState.inputs.location_city.value,
-                        location_pincode: formState.inputs.location_pincode.value,
-                    },
+                    location_city: formState.inputs.location_city.value,
+                    location_pincode: formState.inputs.location_pincode.value,
                     judge: formState.inputs.judge.value,
                     plaintiff: auth.loginID
                 }),
-                { 'Content-type': 'application/json' }
+                { 'Content-Type': 'application/json' }
             );
-            history.push('/');
+            history('/');
         }
         catch (err) { }
     };

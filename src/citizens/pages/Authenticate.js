@@ -13,7 +13,7 @@ export default function Authenticate() {
 
     const auth = useContext(AuthContext);
     const [isLogin, setIsLogin] = useState(true);
-    const { isLoading, error, sendRequest, clearError } = useHttpProcess();
+    const { isLoading, sendRequest, error, clearError } = useHttpProcess();
 
     const [formState, inputHandler, setFormData] = useForm({
         email: { value: '', isValid: false },
@@ -28,7 +28,7 @@ export default function Authenticate() {
                     name: undefined,
                     idCardNo: undefined
                 },
-                false
+                ((formState.inputs.email.isValid) && (formState.inputs.password.isValid))
             )
         } else {
             setFormData(
@@ -51,6 +51,7 @@ export default function Authenticate() {
 
     const userSubmitHandler = async (event) => {
         event.preventDefault();
+        console.log(formState.inputs);
         if (isLogin) {
             try {
                 const responseData = await sendRequest(
@@ -71,18 +72,18 @@ export default function Authenticate() {
             try {
                 const responseData = await sendRequest(
                     'http://localhost:5000/ccms/public/signup',
-                    "POST",
+                    'POST',
                     JSON.stringify({
-                        name: formState.inputs.name.value,
-                        email: formState.inpurts.email.value,
+                        email: formState.inputs.email.value,
                         password: formState.inputs.password.value,
+                        name: formState.inputs.name.value,
                         idCardNo: formState.inputs.idCardNo.value
                     }),
                     { 'Content-type': 'application/json' }
                 );
-                auth.login(responseData.added.id);
                 console.log("signup, req sent.");
                 console.log(responseData.added);
+                auth.login(responseData.added.id);
             } catch (error) { }
         }
     };
@@ -99,8 +100,8 @@ export default function Authenticate() {
             <Card className="authentication">
                 <form onSubmit={userSubmitHandler}>
                     {!isLogin && <Input
-                        type="text"
                         element="input"
+                        type="text"
                         id="name"
                         label=" Name: "
                         errorText="Please enter valid Name. "
@@ -108,8 +109,8 @@ export default function Authenticate() {
                         onInput={inputHandler}
                     />}
                     <Input
-                        type="text"
                         element="input"
+                        type="text"
                         id="email"
                         label=" Your Email: "
                         errorText="Please enter a valid E-Mail input. "
@@ -117,17 +118,17 @@ export default function Authenticate() {
                         onInput={inputHandler}
                     />
                     {!isLogin && <Input
-                        type="text"
-                        element="idCardNo"
-                        id="number"
+                        element="input"
+                        type="number"
+                        id="idCardNo"
                         label=" Your Aadhar Number/VoterID Number :"
                         errorText="Enter a valid number of 12 digits"
                         validators={[VALIDATOR_MINLENGTH(12)]}
                         onInput={inputHandler}
                     />}
                     <Input
-                        type="text"
                         element="input"
+                        type="password"
                         id="password"
                         label=" Your Password: "
                         errorText="Enter a valid Password of 10 digits or more."

@@ -7,27 +7,32 @@ export const useHttpProcess = () => {
 
     const activeHttpRequests = useRef([]);
 
-    const sendRequests = useCallback(async (url, method = 'GET', body = null, header = {}) => {
-        const abC = new AbortController();
-        activeHttpRequests.current.push(abC);
+    const sendRequest = useCallback(async (url, method = 'get', body = null, headers = {}) => {
+        const httpAbortCtrl = new AbortController();
+        activeHttpRequests.current.push(httpAbortCtrl);
         setIsLoading(true);
         try {
             const response = await fetch(url, {
                 method,
                 body,
-                header,
-                signal: abC.signal
+                headers,
+                signal: httpAbortCtrl.signal
             });
             const responseData = await response.json();
+            activeHttpRequests.current = activeHttpRequests.current.filter(
+                reqCtrl => reqCtrl !== httpAbortCtrl
+            );
             if (!response.ok) {
                 throw new Error(responseData.message);
             }
+            setIsLoading(false);
             return responseData;
         }
         catch (error) {
+            setIsLoading(false);
             setError(error.message);
+            throw error;
         }
-        setIsLoading(false);
     }, [])
 
     const clearError = () => {
@@ -38,7 +43,7 @@ export const useHttpProcess = () => {
         return () => {
             activeHttpRequests.current.forEach(ABC => ABC.abort());
         }
-    }, [])
+    }, [activeHttpRequests])
 
-    return { isloading, error, sendRequests, clearError }
+    return { isloading, sendRequest, error, clearError }
 }

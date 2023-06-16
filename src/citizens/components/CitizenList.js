@@ -4,7 +4,7 @@ import './styles/CitizenList.css';
 import CitizenItem from "./CitizenItem";
 
 export default function CitizenList(props) {
-    if (props.users.length === 0) {
+    if (props.items.length === 0) {
         return (
             <div className="center">
                 <Card>
@@ -16,13 +16,14 @@ export default function CitizenList(props) {
     return (
         <ul className="citizens-list">
             {
-                props.users.map((plaintiff) => {
+                props.items.map((plaintiff) => {
                     return (
                         <CitizenItem
                             id={plaintiff.id}
+                            key={plaintiff.id}
                             name={plaintiff.name}
                             imgURL={plaintiff.image}
-                            caseCount={plaintiff.cases}
+                            caseCount={plaintiff.cases.length}
                         />
                     )
                 }

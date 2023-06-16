@@ -3,21 +3,21 @@ import Input from "../../shared/formElements/Input";
 import Button from "../../shared/formElements/Button";
 import { useForm } from "../../shared/hooks/form-hook";
 import { VALIDATOR_REQUIRE } from "../../shared/util/validators";
-import { useParams, useHistory } from "react-router/cjs/react-router-dom.min";
+import { useParams, useNavigate } from "react-router-dom";
 import Card from "../../shared/UIelements/Card";
 import { useHttpProcess } from "../../shared/hooks/http-hook";
 import ErrorModal from "../../shared/UIelements/ErrorModal";
 import { AuthContext } from "../../shared/context/authContext";
 
 export default function UpdateCases() {
-    const history = useHistory();
+    const navigate = useNavigate();
     const auth = useContext(AuthContext);
 
-    const { isLoading, error, sendRequest, clearError } = useHttpProcess();
+    const { isLoading, sendRequest, error, clearError } = useHttpProcess();
     const caseid = useParams().caseID;
     const [req_case, setReq_case] = useState();
     const [formState, inputHandler, setFormData] = useForm({
-        status: {
+        new_status: {
             value: ' ',
             isValid: false
         },
@@ -35,12 +35,12 @@ export default function UpdateCases() {
                 setReq_case(responseData.foundCase);
                 setFormData(
                     {
-                        status: {
-                            value: responseData.status,
+                        new_status: {
+                            value: responseData.foundCase.new_status,
                             isValid: true
                         },
                         next_hearing: {
-                            value: responseData.next_hearing,
+                            value: responseData.foundCase.next_hearing,
                             isValid: true
                         }
                     },
@@ -49,8 +49,9 @@ export default function UpdateCases() {
             } catch (error) { }
         }
         getCaseData();
+        console.log('getCase request done...');
     }, [sendRequest, caseid, setFormData]);
-
+    console.log(formState.inputs);
     if (!req_case) {
         return (
             <div className="center">
@@ -67,13 +68,14 @@ export default function UpdateCases() {
                 `http://localhost:5000/ccms/admin/update/${caseid}`,
                 'PATCH',
                 JSON.stringify({
-                    status: formState.inputs.status.value,
+                    new_status: formState.inputs.new_status.value,
                     next_hearing: formState.inputs.next_hearing.value
                 }),
                 { 'Content-type': 'application/json' }
             );
-            history.push('/' + auth.loginID + '/cases');
+            navigate('/' + auth.loginID + '/cases');
         } catch (err) { }
+        console.log('case update req sent. ')
     }
 
     return (
@@ -87,15 +89,15 @@ export default function UpdateCases() {
             <ErrorModal error={error} onClear={clearError} />
             <form className="case-form" onSubmit={caseSubmitHandler}>
                 <Input
-                    id="status"
+                    id="new_status"
                     type="text"
                     label="Case Status:  "
                     element="input"
                     errorText="This is a required Field."
                     validators={[VALIDATOR_REQUIRE()]}
                     onInput={inputHandler}
-                    initialValue={formState.inputs.description.value}
-                    initialValidity={formState.inputs.description.isValid}
+                    initialValue={formState.inputs.new_status.value}
+                    initialValidity={formState.inputs.new_status.isValid}
                 />
                 <Input
                     id="next_hearing"

@@ -8,6 +8,9 @@ export default function CaseItem(props) {
     const [isDescBox, setIsBox] = useState(false);
     const openDescBox = () => { setIsBox(true); }
     const closeDescBox = () => { setIsBox(false); }
+    const removeCase = () => {
+        //props.toDelete(props.id); 
+    }
 
     return (
         <div>
@@ -37,7 +40,7 @@ export default function CaseItem(props) {
 
                             <Button onClick={openDescBox} >VIEW DESCRIPTION</Button>
                             <Button to={`/update/${props.id}`}>EDIT</Button>
-                            <Button >DELETE</Button>
+                            <Button onClick={removeCase}>DELETE</Button>
                         </div>
                     </Card>
                 </li>

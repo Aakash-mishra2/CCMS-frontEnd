@@ -14,7 +14,6 @@ export default function CaseList(props) {
             </div>
         );
     }
-
     return (
         <ul className="case-list">
             {props.cases.map(items => (
@@ -27,6 +26,7 @@ export default function CaseList(props) {
                     judge={items.judge}
                     status={items.status}
                     nextDate={items.nextHearing}
+                    toDelete={items.removeItem}
                 />
             ))}
         </ul>
