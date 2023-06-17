@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Citizens from './citizens/pages/Citizens';
-import NewCases from './court/pages/NewCases';
 import RegisteredCases from './court/pages/RegisteredCases';
 import MainNavigation from './shared/Navigation/MainNavigation';
-import UpdateCases from './court/pages/UpdateCases';
-import Authenticate from './citizens/pages/Authenticate';
 import { AuthContext } from './shared/context/authContext';
 
 import './App.css';
-
+//no need to change how we use it just need to change how we import it.
+const Citizens = React.lazy(() => import('./citizens/pages/Citizens'));
+const NewCases = React.lazy(() => import('./court/pages/NewCases'));
+const Authenticate = React.lazy(() => import('./citizens/pages/Authenticate'));
+const UpdateCases = React.lazy(() => import('./court/pages/UpdateCases'));
 export const App = () => {
 
   const [log_In, setLog_In] = useState(false);
@@ -17,7 +17,7 @@ export const App = () => {
 
   function logout() { setLog_In(false); setLoginID(null); }
   function login(cID) { setLog_In(true); setLoginID(cID); }
-
+  //suspense is required to make lazy loading work..
   let routes;
   if (log_In) {
     routes = (
@@ -48,10 +48,15 @@ export const App = () => {
       <BrowserRouter>
         <MainNavigation />
         <main>
-          {routes}
+          <Suspense
+            fallback={
+              <div className='center'> <h2> Loading...</h2> </div>
+            }>
+            {routes}
+          </Suspense>
         </main>
       </BrowserRouter>
-    </AuthContext.Provider>
+    </AuthContext.Provider >
   );
 }
 
