@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import RegisteredCases from './court/pages/RegisteredCases';
 import MainNavigation from './shared/Navigation/MainNavigation';
 import { AuthContext } from './shared/context/authContext';
-
+import LoadingSpinner from './shared/UIelements/LoadingSpinner';
 import './App.css';
 //no need to change how we use it just need to change how we import it.
 const Citizens = React.lazy(() => import('./citizens/pages/Citizens'));
@@ -50,7 +50,7 @@ export const App = () => {
         <main>
           <Suspense
             fallback={
-              <div className='center'> <h2> Loading...</h2> </div>
+              <div className='center'><LoadingSpinner asOverlay /></div>
             }>
             {routes}
           </Suspense>
