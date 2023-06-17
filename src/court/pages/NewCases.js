@@ -8,7 +8,7 @@ import { useHttpProcess } from "../../shared/hooks/http-hook";
 import { AuthContext } from "../../shared/context/authContext";
 import ErrorModal from "../../shared/UIelements/ErrorModal";
 import { useNavigate } from "react-router-dom";
-
+import LoadingSpinner from "../../shared/UIelements/LoadingSpinner";
 export default function NewCases() {
     const auth = useContext(AuthContext);
     const [formState, inputHandler] = useForm({
@@ -62,11 +62,7 @@ export default function NewCases() {
     return (
         <React.Fragment>
             <ErrorModal error={error} onClear={clearError} />
-            {(isLoading) && (
-                < div className="center">
-                    <h2>Loading...</h2>
-                </div>
-            )}
+            {(isLoading) && (<LoadingSpinner asOverlay />)}
             <form className="case-form" onSubmit={caseSubmitHandler}>
                 <Input
                     element="input"

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import CitizenList from "../components/CitizenList";
 import { useHttpProcess } from "../../shared/hooks/http-hook";
 import ErrorModal from "../../shared/UIelements/ErrorModal";
-export default function Citizens() {
+import LoadingSpinner from "../../shared/UIelements/LoadingSpinner";
 
+export default function Citizens() {
     const { isLoading, error, sendRequest, clearError } = useHttpProcess();
     const [allCitizens, setAllCitizens] = useState();
 
@@ -21,11 +22,7 @@ export default function Citizens() {
     return (
         <React.Fragment>
             <ErrorModal error={error} onClear={clearError} />
-            {isLoading &&
-                (<div className="center">
-                    <h2>Loading...</h2>
-                </div>)
-            }
+            {isLoading && (<LoadingSpinner asOverlay />)}
             {!isLoading && allCitizens && <CitizenList items={allCitizens} />}
         </React.Fragment>
     )

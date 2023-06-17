@@ -8,11 +8,10 @@ import Card from "../../shared/UIelements/Card";
 import { useHttpProcess } from "../../shared/hooks/http-hook";
 import ErrorModal from "../../shared/UIelements/ErrorModal";
 import { AuthContext } from "../../shared/context/authContext";
-
+import LoadingSpinner from "../../shared/UIelements/LoadingSpinner";
 export default function UpdateCases() {
     const navigate = useNavigate();
     const auth = useContext(AuthContext);
-
     const { isLoading, sendRequest, error, clearError } = useHttpProcess();
     const caseid = useParams().caseID;
     const [req_case, setReq_case] = useState();
@@ -51,7 +50,6 @@ export default function UpdateCases() {
         getCaseData();
         console.log('getCase request done...');
     }, [sendRequest, caseid, setFormData]);
-    console.log(formState.inputs);
     if (!req_case) {
         return (
             <div className="center">
@@ -81,11 +79,7 @@ export default function UpdateCases() {
     return (
         <React.Fragment>
             <ErrorModal error={error} onClear={clearError} />
-            {(isLoading) && (
-                < div className="center">
-                    <h2>Loading...</h2>
-                </div>
-            )}
+            {(isLoading) && (<LoadingSpinner asOverlay />)}
             <ErrorModal error={error} onClear={clearError} />
             <form className="case-form" onSubmit={caseSubmitHandler}>
                 <Input
