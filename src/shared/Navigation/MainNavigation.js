@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import MainHeader from "./MainHeader";
 import Navlinks from "./Navlinks";
@@ -9,6 +9,14 @@ import './styles/MainNavigation.css';
 
 export default function MainNavigation() {
     const [menu, setMenu] = useState(false);
+    const [width, setWidth] = useState(window.innerWidth);
+    const breakpoint = 860;
+    useEffect(() => {
+        const handleWindowResize = () => (setWidth(window.innerWidth))
+        window.addEventListener("resize", handleWindowResize);
+
+        return () => window.removeEventListener("resize", handleWindowResize);
+    }, [])
 
     function openMenu() {
         setMenu(true);
@@ -35,7 +43,7 @@ export default function MainNavigation() {
                 </button>
 
                 <h1 className="main-navigation__title">
-                    <Link to='/'>Court Case Management</Link>
+                    <Link to='/'>{(width > breakpoint) ? 'Court Case Management' : 'C.C.M.S.'}</Link>
                 </h1>
                 <nav className="main-navigation__header-nav">
                     <Navlinks />

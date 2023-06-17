@@ -5,7 +5,7 @@ import Modal from "../../shared/UIelements/Modal";
 import { useHttpProcess } from "../../shared/hooks/http-hook";
 import ErrorModal from "../../shared/UIelements/ErrorModal";
 import { AuthContext } from "../../shared/context/authContext";
-
+const ADMIN_ID = "648dc29c1a7197fd8ac31370";
 export default function CaseItem(props) {
     const auth = useContext(AuthContext);
     const { isLoading, sendRequest, error, clearError } = useHttpProcess();
@@ -68,10 +68,10 @@ export default function CaseItem(props) {
                         <div className="case-item__actions">
 
                             <Button onClick={openDescBox} >VIEW DESCRIPTION</Button>
-                            {(auth.loginId === props.creatorID) && (
+                            {(auth.loginId === ADMIN_ID) && (
                                 <Button to={`/update/${props.id}`}>EDIT</Button>
                             )}
-                            {(auth.loginId === props.creatorID) && (
+                            {(auth.loginId === ADMIN_ID) && (
                                 <Button danger onClick={openConfirmModal}>DELETE</Button>
                             )}
                         </div>
