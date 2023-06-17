@@ -13,7 +13,7 @@ export default function RegisteredCases() {
   useEffect(() => {
     const getAllCases = async () => {
       try {
-        const responseData = await sendRequest(`http://localhost:5000/ccms/admin/user/${userID}`);
+        const responseData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/admin/user/${userID}`);
         setLoadedCases(responseData.allCases);
       } catch (err) { }
     }

@@ -53,7 +53,7 @@ export default function Input(props) {
         props.element === "input" ? (
             <input
                 type={props.type}
-                placeholder={props.placeholder}
+                placeholder={props.placeHolder}
                 id={props.id}
                 onChange={changeHandler}
                 onBlur={touchHandler}
@@ -63,7 +63,7 @@ export default function Input(props) {
             (
                 <textarea
                     type={props.type}
-                    placeholder={props.placeholder}
+                    placeholder={props.placeHolder}
                     id={props.id}
                     rows={props.rows || 3}
                     onChange={changeHandler}

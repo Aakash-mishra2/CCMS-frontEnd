@@ -42,7 +42,7 @@ export default function NewCases() {
         event.preventDefault();
         try {
             await sendRequest(
-                'http://localhost:5000/ccms/admin/newcase',
+                process.env.REACT_APP_BACKEND_URL + '/admin/newcase',
                 'POST',
                 JSON.stringify({
                     court: formState.inputs.court.value,
@@ -72,7 +72,7 @@ export default function NewCases() {
                     element="input"
                     type="text"
                     id="court"
-                    label="Court name :"
+                    label="Court name:"
                     errorText="Please Enter a valid court name, required* "
                     validators={[VALIDATOR_REQUIRE()]}
                     onInput={inputHandler}
@@ -87,11 +87,11 @@ export default function NewCases() {
                     onInput={inputHandler}
                 />
                 <Input
-                    element="input"
+                    element="textarea"
                     type="text"
                     id="location_city"
-                    label="Enter Court location : City & Pincode "
-                    placeHolder="Enter City here"
+                    label="Your Permanent Address:"
+                    placeHolder="Enter Permanent Address Here."
                     errorText="This is a required field."
                     validators={[VALIDATOR_REQUIRE()]}
                     onInput={inputHandler}
@@ -109,7 +109,7 @@ export default function NewCases() {
                     element="input"
                     type="text"
                     id="judge"
-                    label="Name of the Judge :"
+                    label="Name of the Judge:"
                     errorText="Please Enter Valid Name. "
                     validators={[VALIDATOR_REQUIRE()]}
                     onInput={inputHandler}

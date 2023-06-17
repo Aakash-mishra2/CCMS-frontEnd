@@ -31,7 +31,7 @@ export default function UpdateCases() {
     useEffect(() => {
         const getCaseData = async () => {
             try {
-                const responseData = await sendRequest(`http://localhost:5000/ccms/admin/${caseid}`);
+                const responseData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/admin/${caseid}`);
                 setReq_case(responseData.foundCase);
                 setFormData(
                     {
@@ -65,7 +65,7 @@ export default function UpdateCases() {
         event.preventDefault();
         try {
             await sendRequest(
-                `http://localhost:5000/ccms/admin/update/${caseid}`,
+                `${process.env.REACT_APP_BACKEND_URL}/admin/update/${caseid}`,
                 'PATCH',
                 JSON.stringify({
                     new_status: formState.inputs.new_status.value,
