@@ -18,14 +18,16 @@ export default function CitizenList(props) {
             {
                 props.items.map((plaintiff) => {
                     return (
-                        <CitizenItem
-                            id={plaintiff.id}
-                            key={plaintiff.id}
-                            name={plaintiff.name}
-                            imgURL={plaintiff.image}
-                            caseCount={plaintiff.cases.length}
-                        />
-                    )
+                        (plaintiff.name !== "ADMIN-1") && (
+                            <CitizenItem
+                                id={plaintiff.id}
+                                key={plaintiff.id}
+                                name={plaintiff.name}
+                                imgURL={plaintiff.image}
+                                caseCount={plaintiff.cases.length}
+                            />
+                        )
+                    );
                 }
                 )
             }
