@@ -20,7 +20,7 @@ export default function Navlinks() {
                 {auth.isLoggedIn && <NavLink to="/cases/new">NEW CASE</NavLink>}
             </li>
             <li>
-                {!auth.isLoggedIn && <NavLink to="users/authenticate">AUTHENTICATE</NavLink>}
+                {!auth.isLoggedIn && <NavLink to="/users/authenticate">AUTHENTICATE</NavLink>}
             </li>
             <li>
                 {auth.isLoggedIn && <Button onClick={auth.logout} >LOGOUT</Button>}
