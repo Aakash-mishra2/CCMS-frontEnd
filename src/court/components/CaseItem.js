@@ -4,7 +4,9 @@ import Button from "../../shared/formElements/Button";
 import Modal from "../../shared/UIelements/Modal";
 import { useHttpProcess } from "../../shared/hooks/http-hook";
 import ErrorModal from "../../shared/UIelements/ErrorModal";
+import LoadingSpinner from "../../shared/UIelements/LoadingSpinner";
 import { AuthContext } from "../../shared/context/authContext";
+
 const ADMIN_ID = "648dc29c1a7197fd8ac31370";
 export default function CaseItem(props) {
     const auth = useContext(AuthContext);
@@ -31,9 +33,7 @@ export default function CaseItem(props) {
         <div>
             <React.Fragment>
                 <ErrorModal error={error} clearError={clearError} />
-                {isLoading && (
-                    <div><h1>Loading</h1></div>
-                )}
+                {isLoading && (<LoadingSpinner asOverlay />)}
                 <Modal
                     show={isDescBox}
                     closeBox={closeDescBox}
@@ -68,12 +68,8 @@ export default function CaseItem(props) {
                         <div className="case-item__actions">
 
                             <Button onClick={openDescBox} >VIEW DESCRIPTION</Button>
-                            {(auth.loginId === ADMIN_ID) && (
-                                <Button to={`/update/${props.id}`}>EDIT</Button>
-                            )}
-                            {(auth.loginId === ADMIN_ID) && (
-                                <Button danger onClick={openConfirmModal}>DELETE</Button>
-                            )}
+                            {auth.loginId === ADMIN_ID && (<Button to={`/update/${props.id}`}>EDIT</Button>)}
+                            {auth.loginId === ADMIN_ID && (<Button danger onClick={openConfirmModal}>DELETE</Button>)}
                         </div>
                     </Card>
                 </li>

@@ -8,6 +8,7 @@ import { AuthContext } from "../../shared/context/authContext";
 import './Authenticate.css';
 import ErrorModal from "../../shared/UIelements/ErrorModal";
 import { useHttpProcess } from "../../shared/hooks/http-hook";
+import LoadingSpinner from "../../shared/UIelements/LoadingSpinner";
 
 export default function Authenticate() {
 
@@ -51,7 +52,6 @@ export default function Authenticate() {
 
     const userSubmitHandler = async (event) => {
         event.preventDefault();
-        console.log(formState.inputs);
         if (isLogin) {
             try {
                 const responseData = await sendRequest(
@@ -92,11 +92,7 @@ export default function Authenticate() {
     return (
         <React.Fragment>
             <ErrorModal error={error} onClear={clearError} />
-            {(isLoading) && (
-                < div className="center">
-                    <h2>Loading...</h2>
-                </div>
-            )}
+            {(isLoading) && (<LoadingSpinner asOverlay />)}
             <Card className="authentication">
                 <form onSubmit={userSubmitHandler}>
                     {!isLogin && <Input

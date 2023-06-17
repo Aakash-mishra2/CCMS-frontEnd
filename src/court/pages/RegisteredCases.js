@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import CaseList from "../components/CaseList";
 import { useHttpProcess } from "../../shared/hooks/http-hook";
 import ErrorModal from "../../shared/UIelements/ErrorModal";
-
+import LoadingSpinner from "../../shared/UIelements/LoadingSpinner";
 export default function RegisteredCases() {
   const userID = useParams().uid;
   const [loadedCases, setLoadedCases] = useState();
@@ -28,11 +28,7 @@ export default function RegisteredCases() {
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError} />
-      {isLoading &&
-        (<div className="center">
-          <h2>Loading...</h2>
-        </div>)
-      }
+      {isLoading && (<LoadingSpinner asOverlay />)}
       {!isLoading && loadedCases && <CaseList plaintiffID={userID} removeItem={removeCase} cases={loadedCases} />}
     </React.Fragment>
   )
