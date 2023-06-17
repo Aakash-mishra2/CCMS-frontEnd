@@ -20,7 +20,7 @@ export default function CaseItem(props) {
         setConfirmModal(false);
         try {
             await sendRequest(
-                `http://localhost:5000/ccms/admin/remove/${props.id}`,
+                `${process.env.REACT_APP_BACKEND_URL}/admin/remove/${props.id}`,
                 'DELETE',
             );
             props.toDelete(props.id);

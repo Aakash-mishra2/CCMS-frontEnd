@@ -55,7 +55,7 @@ export default function Authenticate() {
         if (isLogin) {
             try {
                 const responseData = await sendRequest(
-                    'http://localhost:5000/ccms/public/login',
+                    `${process.env.REACT_APP_BACKEND_URL}/public/login`,
                     'POST',
                     JSON.stringify({
                         email: formState.inputs.email.value,
@@ -71,7 +71,7 @@ export default function Authenticate() {
         else {
             try {
                 const responseData = await sendRequest(
-                    'http://localhost:5000/ccms/public/signup',
+                    `${process.env.REACT_APP_BACKEND_URL}/public/signup`,
                     'POST',
                     JSON.stringify({
                         email: formState.inputs.email.value,

@@ -10,7 +10,7 @@ export default function Citizens() {
     useEffect(() => {
         const getAllPlaintiffs = async () => {
             try {
-                const responseData = await sendRequest('http://localhost:5000/ccms/public');
+                const responseData = await sendRequest(process.env.REACT_APP_BACKEND_URL + '/public');
                 setAllCitizens(responseData.plaintiffs);
             }
             catch (error) { }
