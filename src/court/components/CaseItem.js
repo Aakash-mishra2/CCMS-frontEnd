@@ -7,7 +7,7 @@ import ErrorModal from "../../shared/UIelements/ErrorModal";
 import LoadingSpinner from "../../shared/UIelements/LoadingSpinner";
 import { AuthContext } from "../../shared/context/authContext";
 
-const ADMIN_ID = "648dc29c1a7197fd8ac31370";
+
 export default function CaseItem(props) {
     const auth = useContext(AuthContext);
     const { isLoading, sendRequest, error, clearError } = useHttpProcess();
@@ -68,8 +68,8 @@ export default function CaseItem(props) {
                         <div className="case-item__actions">
 
                             <Button onClick={openDescBox} >VIEW DESCRIPTION</Button>
-                            {auth.loginId === ADMIN_ID && (<Button to={`/update/${props.id}`}>EDIT</Button>)}
-                            {auth.loginId === ADMIN_ID && (<Button danger onClick={openConfirmModal}>DELETE</Button>)}
+                            <Button to={`/update/${props.id}`}>EDIT</Button>
+                            {auth.loginID === props.creatorID && (<Button danger onClick={openConfirmModal}>DELETE</Button>)}
                         </div>
                     </Card>
                 </li>

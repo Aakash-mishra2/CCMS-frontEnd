@@ -10,6 +10,7 @@ export default function Navlinks() {
     const auth = useContext(AuthContext);
     return (
         <ul className="nav-links">
+            <li><NavLink to="/newUser">I'm New Here!</NavLink></li>
             <li>
                 <NavLink to="/">CITIZENS</NavLink>
             </li>
