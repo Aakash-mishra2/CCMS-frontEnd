@@ -12,7 +12,7 @@ export default function Navlinks() {
         <ul className="nav-links">
             <li><NavLink to="/newUser">I'm New Here!</NavLink></li>
             <li>
-                <NavLink to="/">CITIZENS</NavLink>
+                <NavLink to="/citizens">CITIZENS</NavLink>
             </li>
             <li>
                 {auth.isLoggedIn && <NavLink to={`/${auth.loginID}/cases`}>MY CASES</NavLink>}
@@ -21,7 +21,7 @@ export default function Navlinks() {
                 {auth.isLoggedIn && <NavLink to="/cases/new">NEW CASE</NavLink>}
             </li>
             <li>
-                {!auth.isLoggedIn && <NavLink to="/users/authenticate">AUTHENTICATE</NavLink>}
+                {!auth.isLoggedIn && <NavLink to="/">AUTHENTICATE</NavLink>}
             </li>
             <li>
                 {auth.isLoggedIn && <Button onClick={auth.logout} >LOGOUT</Button>}
