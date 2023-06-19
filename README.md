@@ -23,10 +23,8 @@ All features of the app are available on navigation bar in desktop mode and in a
 - can also delete existing cases.
 
 
-
-
 ## Demo
-
+![](ccms-gif.gif)
 
 
 ## New user Guide
@@ -64,8 +62,6 @@ All features of the app are available on navigation bar in desktop mode and in a
 **Client:** ReactJS
 
 **Server:** MongoDB, Node, Express
-
-
 
 
 ## Authors
