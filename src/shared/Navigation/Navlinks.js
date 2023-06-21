@@ -11,9 +11,9 @@ export default function Navlinks() {
     return (
         <ul className="nav-links">
             <li><NavLink to="https://github.com/Aakash-mishra2/CCMS-frontEnd#readme">New User Guide</NavLink></li>
-            <li>
-                <NavLink to="/citizens">CITIZENS</NavLink>
-            </li>
+            {/* <li>
+                {auth.isLoggedIn && <NavLink to="/citizens">CITIZENS</NavLink>}
+            </li>*/}
             <li>
                 {auth.isLoggedIn && <NavLink to={`/${auth.loginID}/cases`}>MY CASES</NavLink>}
             </li>

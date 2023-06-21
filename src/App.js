@@ -22,24 +22,21 @@ export const App = () => {
   if (log_In) {
     routes = (
       <Routes>
-        <Route path="/" element={< Authenticate />} />
-        <Route path="/citizens" element={<Citizens />} />
+
+        <Route path="/" element={<Citizens />} />
         <Route path="/cases/new" element={<NewCases />} />
         <Route path="/:uid/cases" element={< RegisteredCases />} />
         <Route path="/update/:caseID" element={<UpdateCases />} />
-        <Route path="/" element={<Navigate to="/citizens" />} />
       </Routes>
     )
   }
   else {
     routes = (
       <Routes>
-        <Route path="/" element={< Authenticate />} />
-        <Route path="/citizens" element={<Citizens />} />
-        <Route path="/citizens" element={<Navigate to="/" />} />
         <Route path="/cases/new" element={<Navigate to="/" />} />
         <Route path="/:uid/cases" element={<Navigate to="/" />} />
         <Route path="/update/:caseID" element={<Navigate to="/" />} />
+        <Route path="/" element={< Authenticate />} />
       </Routes>
     )
   }

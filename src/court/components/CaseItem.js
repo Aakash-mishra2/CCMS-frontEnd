@@ -37,7 +37,7 @@ export default function CaseItem(props) {
                 <Modal
                     show={isDescBox}
                     closeBox={closeDescBox}
-                    header={`REGISTRATION - ID: ${props.id} --- Status: ${props.status}`}
+                    header={`REGISTRATION - ID: ${props.id} `}
                     footer={<Button onClick={closeDescBox} >CLOSE</Button>}
                     contentClass="case-item__modal-content"
                     footerClass="case-item__modal-actions"
@@ -45,6 +45,7 @@ export default function CaseItem(props) {
                     <h4> Description : {props.description}</h4>
                     <p> Next Hearing  : {props.nextDate} </p>
                     <p> Judge : {props.judge} </p>
+                    <p> Status: {props.status} </p>
                 </Modal>
                 <Modal
                     show={confirmModal}
